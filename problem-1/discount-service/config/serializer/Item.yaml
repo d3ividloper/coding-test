@@ -1,0 +1,9 @@
+App\Domain\ValueObject\Discount:
+  attributes:
+    amount:
+      groups: ['view']
+    description:
+      groups: ['view']
+    freeItems:
+      groups: ['view']
+

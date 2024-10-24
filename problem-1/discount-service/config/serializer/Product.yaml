@@ -1,0 +1,6 @@
+App\Domain\ValueObject\Money:
+  attributes:
+    amount:
+      groups: ['view']
+    currency:
+      groups: ['view']

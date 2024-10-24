@@ -8,11 +8,24 @@ use App\Domain\ValueObject\Money;
 
 class Order
 {
+    private int $id;
+    private Customer $customer;
+    private array $items;
+    private Money $totalAmount;
+
     public function __construct(
-        private int $id,
-        private Customer $customer,
-        private array $items = []
-    ){}
+        int $id,
+        Customer $customer,
+        Money $totalAmount,
+        array $items = []
+    ){
+        $this->id = $id;
+        $this->customer = $customer;
+        $this->totalAmount = $totalAmount;
+        foreach ($items as $item) {
+            $this->addItem($item);
+        }
+    }
 
 
     public function getId(): int
@@ -28,6 +41,16 @@ class Order
     public function setCustomer(Customer $customer): void
     {
         $this->customer = $customer;
+    }
+
+    public function getTotalAmount(): Money
+    {
+        return $this->totalAmount;
+    }
+
+    public function setTotalAmount(Money $totalAmount): void
+    {
+        $this->totalAmount = $totalAmount;
     }
 
     public function addItem(Item $item): void
@@ -47,7 +70,6 @@ class Order
         foreach ($this->items as $item) {
             $total = $total->add($item->getTotalPrice());
         }
-
         return $total;
     }
 }

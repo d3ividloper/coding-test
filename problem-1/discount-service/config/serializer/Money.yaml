@@ -1,0 +1,11 @@
+App\Domain\ValueObject\Item:
+  attributes:
+    product:
+      groups: ['view']
+    quantity:
+      groups: ['view']
+    unitPrice:
+      groups: ['view']
+    totalPrice:
+      groups: [ 'view' ]
+

@@ -1,0 +1,9 @@
+App\Domain\Exception\DomainException:
+  attributes:
+    domainCode:
+      serialized_name: code
+      groups: ['error']
+    description:
+      groups: ['error']
+    jsonIn:
+      groups: ['error']

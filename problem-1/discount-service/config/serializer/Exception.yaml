@@ -5,5 +5,3 @@ App\Domain\Exception\DomainException:
       groups: ['error']
     description:
       groups: ['error']
-    jsonIn:
-      groups: ['error']

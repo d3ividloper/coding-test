@@ -1,9 +1,11 @@
-App\Domain\ValueObject\Discount:
+App\Domain\ValueObject\Item:
   attributes:
-    amount:
+    product:
       groups: ['view']
-    description:
+    quantity:
       groups: ['view']
-    freeItems:
+    unitPrice:
       groups: ['view']
+    totalPrice:
+      groups: [ 'view' ]
 

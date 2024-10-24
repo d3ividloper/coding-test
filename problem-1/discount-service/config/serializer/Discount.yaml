@@ -1,0 +1,9 @@
+App\Domain\ValueObject\Discount:
+  attributes:
+    description:
+      groups: [ 'amount', 'freeItems' ]
+    amount:
+#      serialized_name: amountDiscount
+      groups: ['amount']
+    freeItems:
+      groups: ['freeItems']

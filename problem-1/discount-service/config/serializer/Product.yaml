@@ -1,6 +1,10 @@
-App\Domain\ValueObject\Money:
+App\Domain\Entity\Product:
   attributes:
-    amount:
+    id:
       groups: ['view']
-    currency:
+    description:
       groups: ['view']
+    category:
+      groups: [ 'view' ]
+    price:
+      groups: [ 'view' ]

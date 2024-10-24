@@ -1,11 +1,6 @@
-App\Domain\ValueObject\Item:
+App\Domain\ValueObject\Money:
   attributes:
-    product:
+    amount:
       groups: ['view']
-    quantity:
+    currency:
       groups: ['view']
-    unitPrice:
-      groups: ['view']
-    totalPrice:
-      groups: [ 'view' ]
-

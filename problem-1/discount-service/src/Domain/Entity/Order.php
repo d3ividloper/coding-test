@@ -62,14 +62,4 @@ class Order
     {
         return $this->items;
     }
-
-    public function getTotalPrice(): Money
-    {
-        $total = new Money(0);
-
-        foreach ($this->items as $item) {
-            $total = $total->add($item->getTotalPrice());
-        }
-        return $total;
-    }
 }

@@ -1,6 +1,7 @@
 <?php
+declare(strict_types=1);
 
-namespace App\Domain\Service;
+namespace App\Domain\Service\DiscountRules;
 
 use App\Domain\Entity\Order;
 use App\Domain\Service\DiscountRuleInterface;

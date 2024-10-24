@@ -4,16 +4,25 @@ declare(strict_types=1);
 namespace App\Domain\Service;
 
 use App\Domain\Entity\Order;
-use App\Domain\ValueObject\Discount;
-use App\Domain\ValueObject\Money;
 
 class DiscountCalculator
 {
-    public function calculateDiscount(Order $order): Discount
-    {
-        $total = $order->getTotalPrice();
-        $discountAmount = new Money(0);
+    /** @var iterable<DiscountRuleInterface> */
+    private iterable $discountRules;
 
-        // TODO: define rules for discounts
+    public function __construct(iterable $discountRules)
+    {
+        $this->discountRules = $discountRules;
+    }
+
+    public function calculateDiscount(Order $order): array
+    {
+        $discountsArray = [];
+        foreach ($this->discountRules as $rule) {
+            if($rule->apply($order) !== null) {
+                $discountsArray[] = $rule->apply($order);
+            }
+        }
+        return $discountsArray;
     }
 }

@@ -3,18 +3,17 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObject;
 
+use App\Domain\Entity\Product;
+
 class Item
 {
     public function __construct(
-        private Product $product,
-        private Money $price,
-        private int $quantity
+        private readonly Product     $product,
+        private readonly int     $quantity,
+        private readonly Money   $unitPrice,
+        private readonly Money   $totalPrice
     ){}
 
-    public function getPrice(): Money
-    {
-        return $this->price;
-    }
 
     public function getProduct(): Product
     {
@@ -26,9 +25,25 @@ class Item
         return $this->quantity;
     }
 
+    public function getUnitPrice(): Money
+    {
+        return $this->unitPrice;
+    }
+
     public function getTotalPrice(): Money
     {
-        return $this->price->product($this->quantity);
+        return $this->totalPrice;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'productId' => $this->getProduct()->getId(),
+            'productDescription' => $this->getProduct()->getDescription(),
+            'quantity' => $this->getQuantity(),
+            'unitPrice' => $this->getUnitPrice()->getAmount(),
+            'total' => $this->getTotalPrice()->getAmount()
+        ];
     }
 
 }

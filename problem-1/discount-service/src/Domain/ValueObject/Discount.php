@@ -6,16 +6,38 @@ namespace App\Domain\ValueObject;
 class Discount
 {
     public function __construct(
-        private Money $amount
+        private ?Money $amount = null,
+        private ?string $description = null,
+        private array $freeItems = []
     ){}
 
-    public function getAmount(): Money
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+    public function getAmount(): ?Money
     {
         return $this->amount;
     }
-
-    public function applyTo(Money $total): Money
+    public function getFreeItems(): array
     {
-        return $total->subtract($this->amount);
+        return $this->freeItems;
+    }
+
+    public function toArray(): array
+    {
+        $items = [];
+        if($this->description) {
+            $items['discountDescription'] = $this->description;
+        }
+
+        if ($this->amount){
+            $items['discountAmount'] = round($this->amount->getAmount(), 2);
+        }
+        foreach($this->freeItems as $item){
+            $items['freeItems'][] = $item->toArray();
+        }
+
+        return $items;
     }
 }

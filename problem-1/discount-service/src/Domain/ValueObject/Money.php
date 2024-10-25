@@ -6,7 +6,8 @@ namespace App\Domain\ValueObject;
 class Money
 {
 
-    public function __construct(private float $amount, private string $currency = 'EURO')
+    //TODO Create Currency VO in order to deal with different currencies
+    public function __construct(private float $amount, private string $currency = 'EUR')
     {
     }
 

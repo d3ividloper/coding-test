@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObject;
 
-class Discount
+final class Discount
 {
     public function __construct(
         private ?Money $amount = null,

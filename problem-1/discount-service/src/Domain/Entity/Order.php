@@ -22,6 +22,7 @@ class Order
         $this->id = $id;
         $this->customer = $customer;
         $this->totalAmount = $totalAmount;
+        $this->items = [];
         foreach ($items as $item) {
             $this->addItem($item);
         }
@@ -61,5 +62,19 @@ class Order
     public function getItems(): array
     {
         return $this->items;
+    }
+
+    public function getItemsTotalAmount(): Money
+    {
+        $amount = new Money(0);
+        if(count($this->items) === 0) {
+            return $amount;
+        }
+
+        foreach($this->items as $item) {
+            $amount = $amount->add($item->getUnitPrice()->multiply($item->getQuantity()));
+        }
+
+        return $amount;
     }
 }

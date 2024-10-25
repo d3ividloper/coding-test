@@ -1,10 +1,27 @@
-## Create a microservice to calculate discounts
+# Create a microservice to calculate discounts
+I created a Symfony API (v5) and PHP 8.1 which receive orders by endpoint and return a JSON with the order processed with discounts applied. 
+Applying hexagonal architecture (for future project growing) and DDD. I added some tests and the use case for our microservice.
 
-- I created a Symfony API (v5) and PHP 8.1 which receive orders by endpoint and return a JSON with the order processed with discounts applied.
-- Applied hexagonal architecture (for future project growing) and DDD.
-- Use of several VO as item, Money or Discount.
+## Table of Contents
+* [Usage](#how-to-test)
+* [Layers structure](#layers-structure)
+* [Tests](#tests)
+* [API](#api)
 
-### Domain Layer structure
+
+
+## How to Test
+As a Symfony Project, you can test it by using symfony server and Postman to make requests.
+
+1. Clone the repo
+2. Open a console and go to folder `problem-1/discount-service`
+2. Run `composer install` command in the console.
+3. Run `symfony serve` command in the console. The server listen por 8000 (http://localhost:8000)
+4. Open Postman and make a **POST** request `http://localhost:800/discount` <br/> You can use [example-orders](../../example-orders/) folder data as JSON body.
+
+
+## Layers Structure
+### 1. Domain Layer structure
 
 - Entity: Contain entities and aggregate roots needed for the project (Customer, Order).
 - Service: Contain our service main logic and other needed services.
@@ -12,19 +29,23 @@
 - Exception: Contain custom exceptions for error handling.
 - Repository: Here are the contracts with repos.
 
-### Application layer structure
+### 2. Application layer structure
 
 - UseCase: Contain use cases folders.
 - Contracts: The contract(iface) for Use Case.
 
-### Infrastructure layer structure
+### 3. Infrastructure layer structure
 
 - Controller: The api controller.
 - Repository: The adapters for needed repositories.
 
-### API Response
-The API response is a json which contains an array of discounts.
-I differentiate in discounts with amount (10%, 20%...) and discounts which giveaway items.
+### TESTS
+- I added some unit [tests](./tests) using PHPUnit. I added the Use case, an entity and some services in order to see the different tests we can do.
+
+## API
+### Response
+The API response is in json format which contains an array of discounts.
+I differentiate in both cases: discounts with amount (10%, 20%...) and discounts which giveaway items.
 As you can see in the code below:
 ```
 {
@@ -56,10 +77,11 @@ As you can see in the code below:
     ]
 }
 ```
-I serialized Discount, Item, Product and Money classes, so it's easy to add a new discount.<br>
+`Discount` has been created as **VO** in order to encapsulate the logic and allow us to create as Discounts as we need in the future.
 
-### Discount Strategy
-I created an interface "DiscountRuleInterface" and some rules will implement it according to Open/close SOLID principle. By this way if we need add another discount rule we only need to create a new rule inside Service/DiscountRules. After that we will have to modify "services.yaml" in order to register the new service and tag it as image shown:
+### <p name=discount> Discount Strategy</p>
+I created an interface [DiscountRuleInterface](./src/Domain/Service/DiscountRuleInterface.php) and some [rules](./src/Domain/Service/DiscountRules) will implement it according to Open/close SOLID principle. 
+By this way if we need add another discount rule we only need to create a new rule inside [Service/DiscountRules](./src/Domain/Service/DiscountRules). After that we will have to modify [services.yaml](./config/services.yaml) in order to register the new service and tag it as image shown:
 ```
     # Register all DiscountRules and DiscountCalculator
     App\Domain\Service\DiscountRules\OrderOver1000DiscountRule:
@@ -75,7 +97,6 @@ I created an interface "DiscountRuleInterface" and some rules will implement it 
         arguments:
             $discountRules: !tagged discount.rule
 ```
-
 
 
 
